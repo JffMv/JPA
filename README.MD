@@ -76,8 +76,9 @@ sudo usermod -a -G docker ec2-user
 docker run -d -p 8080:8080 --name name_image_at_aws name/repository
 ```
 14. Open of port at instance of AWS
-    ![img_9.png](pictures_of_readme/img_9.png)
-15. Verify whit link in http per port 42000
+    
+15. Verify whit link in http per port 8080
+![img.png](images/img.png)
 
 ## Architecture
 ![img_5.png](pictures_of_readme/img_5.png)
@@ -100,7 +101,7 @@ Test of server and API´s work:
 ## How it see
 ![img_8.png](pictures_of_readme/img_8.png)
 
-## Built With
+## Built With!
 
 * [Java](https://www.java.com/es/) - The language used
 * [Maven](https://maven.apache.org/) - Dependency Management
