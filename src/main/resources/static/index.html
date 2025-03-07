@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Management</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { width: 50%; margin: auto; }
+        input, button { display: block; margin: 10px 0; padding: 8px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Property Form</h2>
+    <input type="hidden" id="propertyId">
+    <input type="text" id="address" placeholder="Address" required>
+    <input type="number" id="price" placeholder="Price" required>
+    <input type="number" id="size" placeholder="Size" required>
+    <input type="text" id="description" placeholder="Description" required>
+    <button onclick="addOrUpdateProperty()">Save Property</button>
+
+    <h2>Properties List</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Address</th>
+            <th>Price</th>
+            <th>Size</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="propertyTable"></tbody>
+    </table>
+</div>
+
+<script>
+    const API_URL = `${window.location.origin}/properties`;
+
+    async function fetchProperties() {
+        const response = await fetch(API_URL);
+        const properties = await response.json();
+        const table = document.getElementById('propertyTable');
+        table.innerHTML = '';
+        properties.forEach(prop => {
+            table.innerHTML += `
+                    <tr>
+                        <td>${prop.id}</td>
+                        <td>${prop.address}</td>
+                        <td>${prop.price}</td>
+                        <td>${prop.size}</td>
+                        <td>${prop.description}</td>
+                        <td>
+                            <button onclick="editProperty(${prop.id}, '${prop.address}', ${prop.price}, ${prop.size}, '${prop.description}')">Edit</button>
+                            <button onclick="deleteProperty(${prop.id})">Delete</button>
+                        </td>
+                    </tr>`;
+        });
+    }
+
+    async function addOrUpdateProperty() {
+        const propertyId = document.getElementById('propertyId').value;
+        const property = {
+            address: document.getElementById('address').value,
+            price: document.getElementById('price').value,
+            size: document.getElementById('size').value,
+            description: document.getElementById('description').value
+        };
+
+        const method = propertyId ? 'PUT' : 'POST';
+        const url = propertyId ? `${API_URL}/${propertyId}` : API_URL;
+
+        await fetch(url, {
+            method: method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(property)
+        });
+
+        document.getElementById('propertyId').value = '';
+        document.getElementById('address').value = '';
+        document.getElementById('price').value = '';
+        document.getElementById('size').value = '';
+        document.getElementById('description').value = '';
+
+        fetchProperties();
+    }
+
+    function editProperty(id, address, price, size, description) {
+        document.getElementById('propertyId').value = id;
+        document.getElementById('address').value = address;
+        document.getElementById('price').value = price;
+        document.getElementById('size').value = size;
+        document.getElementById('description').value = description;
+    }
+
+    async function deleteProperty(id) {
+        await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+        fetchProperties();
+    }
+
+    fetchProperties();
+</script>
+</body>
+</html>
