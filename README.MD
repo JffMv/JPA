@@ -1,8 +1,9 @@
+# Link of demostration of work
+https://youtu.be/ANg0vcgG4B0
 # Virtualization and Introduction to Docker
 
 Refers to breaking applications into smaller, independent modules while using virtualization to run them in isolated environments. Docker simplifies this by using containers, which package applications and their dependencies, ensuring consistency across different environments.
-This project use reflexion for use annotations and there use virtualization for deploy but in
-this exercise use a image of Docker.
+This project use TSL in front-end and back-end and this services are deploy at server differents, front in APACHE and back in SpringBootApplication  
 
 ## Getting Started
 
