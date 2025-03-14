@@ -14,7 +14,7 @@ this exercise use a image of Docker.
  ```
  mvn clena install
  ```
-3. Run this project:
+3. Run this project at aws:
 
  ```
  java -jar web_side_CRUD-0.0.1-SNAPSHOT.jar
@@ -32,10 +32,11 @@ java 21 - [Install Java](https://www.oracle.com/co/java/technologies/downloads/)
 
 ## Deployment
 
-Image run this project at instance of AWS per port 8080.
+Image run this project at instance of AWS.
+
 ![img_6.png](pictures_of_readme/img_6.png)
 
-This project run with image Docker from repository:
+This project run with docker image for datab ase:
 
 ```
 jeffer07/lab_5_crud_database
@@ -81,9 +82,9 @@ docker run -d -p 8080:8080 --name name_image_at_aws name/repository
 ![img.png](images/img.png)
 
 ## Architecture
-![img_5.png](pictures_of_readme/img_5.png)
+![img_5.png](images/arqui.png)
 ### HttpServer:
-Is one server that host several services API´s
+use one server and applications of spring boot 
 
 ### Form HTML
 Host a simple form and functions javascript. Those functions call API´s
