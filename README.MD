@@ -89,6 +89,70 @@ use one server and applications of spring boot
 ### Form HTML
 Host a simple form and functions javascript. Those functions call API´s
 
+## TSL
+
+### DuckDNS
+
+1. Create a domain with DuckDNS put the IP public of the Amazon EC2 instance.
+
+
+### Obtaining SSL Certificate and change to format PKCS12 
+
+1. Install Certbot
+
+```
+sudo yum install certbot -y
+```
+
+2. SSL certificate with Certbot
+
+```
+sudo certbot certonly --standalone -d domain
+```
+
+3. Export certificate to PKCS12 format.
+
+```
+sudo openssl pkcs12 -export \
+    -in /etc/letsencrypt/live/"domain"/fullchain.pem \
+    -inkey /etc/letsencrypt/live/"domain"/privkey.pem \
+    -out keyname.p12 \
+    -name "name" \
+    -CAfile /etc/letsencrypt/live/"domain"/chain.pem \
+    -caname "Let's Encrypt"
+```
+
+5. Import at file application.properties
+
+```
+server.ssl.key-store=classpath:"keyname".p12
+server.ssl.key-store-password="password"
+server.ssl.key-store-type=PKCS12
+server.ssl.key-alias="name"
+server.ssl.enabled=true
+```
+
+## Intallation of APACHE
+
+- **Apache Server:**
+
+1. Install apache
+
+```
+sudo yum install httpd
+```
+
+2. Start apache
+```
+sudo systemctl start httpd
+```
+
+3. Enable apache to start on boot
+
+```
+sudo systemctl enable httpd
+```
+
 ## Test
 if you want run of test use this command:
 ```
